@@ -1,0 +1,63 @@
+{% extends 'ExpenseApp/base.html' %}
+
+
+{% block content %}
+
+
+<div class="mainContainer">
+    <div class="transContainer">
+
+        <br />
+        <div>
+            <h3>Profile</h3>
+        </div>
+        <br />
+  
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ ProData }}
+            <div class="grp cat">
+                <label for="nameData">Name</label>
+                <input
+                    type="text"
+                    id="nameData"
+                    name="nameData"
+                    value="{{ ProData.user }}"
+                    placeholder="Enter The Name ... "
+                />
+            </div>
+
+            <div class="grp cat">
+                <label for="catgory">Current Balance</label>
+                <input
+                    type="text"
+                    id="balanceData"
+                    name="balanceData"
+                    value="{{ ProData.current_balance }}"
+                    placeholder="Enter the balance ... "
+                />
+            </div>
+            <div class="grp cat">
+                <label for="budgetData">Current Budget</label>
+                <input
+                    type="text"
+                    id="budgetData"
+                    name="budgetData"
+                    value="{{ ProData.budget }}"
+                    placeholder="Enter the balance ... "
+                />
+            </div>
+                {% if ProData %} 
+                    <input type="submit" style="display: none;"  value="Submit" />
+                {% else %}
+                    <input type="submit"  value="Submit" />
+                {% endif %}
+            <!-- <input type="submit" value="Submit" /> -->
+        </form>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+    

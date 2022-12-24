@@ -1,0 +1,81 @@
+{% extends 'ExpenseApp/base.html' %} {% load static %} {% block content %}
+
+  <div class="mainContainer">
+    <div class="transContainer">
+
+      <br />
+      <div>
+        <h3>Add Transaction</h3>
+      </div>
+      <br />
+  
+      <form action="">
+        {% csrf_token %}
+        <div class="grp cat">
+          <label for="catgory">Category</label>
+          <input
+            type="text"
+            id="catgory"
+            name="catData"
+            placeholder="Category ...."
+          />
+        </div>
+        <div id="dateAndTime">
+          <div class="grp">
+            <label for="transType">Date and time</label>
+          <input
+            type="date"
+            id="date"
+            name="transType"
+            placeholder="date and time"
+          />
+          </div>
+    
+          <div class="grp">
+            <label for="transType">Transaction Type</label>
+            <select id="transType" name="transType">
+              <option name="income">Income</option>
+              <option name="expense">Expense</option>
+          </select>
+          </div>
+        </div>
+        
+  
+       <div class="grp">
+          <label for="transDisc">Description</label>
+          <textarea
+            id="transDisc"
+            name="transDisc"
+            rows="2"
+            placeholder="Write something.."
+          ></textarea>
+       </div>
+  
+        <input style="" type="submit" value="Submit" />
+      </form>
+    </div>
+
+  </div>
+
+  {% block jquery %}
+  <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"
+    type="text/javascript"
+  ></script>
+  <script type="text/javascript">
+    $(function () {
+      var dtToday = new Date();
+
+      var month = dtToday.getMonth() + 1;
+      var day = dtToday.getDate();
+      var year = dtToday.getFullYear();
+      if (month < 10) month = "0" + month.toString();
+      if (day < 10) day = "0" + day.toString();
+
+      var maxDate = year + "-" + month + "-" + day;
+      $("#date").attr("max", maxDate);
+    });
+  </script>
+
+  {% endblock %} 
+{% endblock %}

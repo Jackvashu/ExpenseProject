@@ -1,0 +1,92 @@
+   <form style="width: 50%;" method="post">
+            {% csrf_token %}
+            <div class="grp">
+                <label for="transCategory">Transaction Type</label>
+                <select class="ctrl" name="transType">
+                  <option name="income">Income</option>
+                  <option name = "expense">Expense</option>
+                </select>
+              </div>
+            <div class="grp">
+              <label for="transDate">Date and time</label>
+              <input type="date" class="ctrl" name="transDate" placeholder="date and time">
+            </div>
+            <div class="grp">
+              <label for="catData">Category</label>
+              <input type="text" class="ctrl" name="catData" placeholder="Category .....">
+            </div>
+            <div class="grp">
+                <label for="transDisc">Description</label>
+                <textarea class="ctrl" id="transDisc" rows="2"></textarea>
+              </div>
+            <div class="grp form-check">
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    {% load static %}
+
+
+    {% block content %}
+    
+    <div class="topnav">
+      <div>
+        <a class="active" href="{% url 'home' %}">EXPENSE</a>
+      </div>
+      <div>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'profile' %}">Profile Screen</a>
+        <a href="{% url 'showTransactionList' %}">Transaction List</a>
+        <a href="{% url 'add_transaction' %}">Add Transaction</a>
+      </div>
+      
+    
+      
+    
+    </div>
+      
+    {% endblock  %}
+      
+
+
+
+    <div class="addContainer" >
+      <br>
+      <div>
+          <h3>Profile</h3>
+      </div>
+      <br>
+  
+      <form style="width: 50%;" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="nameData">Name</label>
+            <input type="text" class="form-control" id="nameData" placeholder="Enter the Name">
+          </div>
+          <div class="form-group">
+              <label for="balanceData">Current Balance</label>
+              <input type="text"  class="form-control" id="balanceData" placeholder="Enter the Balance"></input>
+          </div>
+          <div class="form-group">
+              <label for="budgetData">Current Budget</label>
+              <input type="text" class="form-control" id="budgetData" placeholder="Enter the Budget">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+  </div>
+
+
+

@@ -1,0 +1,38 @@
+{% extends 'ExpenseApp/base.html' %}
+
+
+{% block content %}
+    <br>
+    <div style="width: 50%; margin-left: 10%;">
+        <div>
+            <h3>Show Transaction</h3>
+        </div>
+        <br>
+        <div style="margin-left: 5rem;">
+            <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">DATE</th>
+                    <th scope="col">Category</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>April 20 2022</td>
+                    <td>Travel Expense</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>April 19 2022</td>
+                    <td>Food Expense</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+    </div>
+    
+{% endblock %}
+    
+    

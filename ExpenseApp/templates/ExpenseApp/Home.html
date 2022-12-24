@@ -1,0 +1,64 @@
+
+{% extends 'ExpenseApp/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <br>
+        <div class="danger">
+            <span>You are going over buget limit!!</span>
+        </div>
+        <br>
+        <section class="section section-stats">
+            <div class="row">
+                <div class="col s12 m12 l4">
+                    <div class="card-panel">
+                        <h6 class="bold">Total Balance</h6>
+                        <h1 class="bold">$3000</h1>
+                    </div>
+                </div>
+
+                <div class="col s12 m12 l4">
+                    <div class="card-panel">
+                        <h6 class="bold">Total Budget</h6>
+                        <h1 class="bold">$2000</h1>
+                    </div>
+                </div>
+
+                <div class="col s12 m12 l4">
+                    <div class="card-panel">
+                        <h6 class="bold">Budget Left</h6>
+                        <h1 class="bold">$1148</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <br>
+        <div>
+            <h3>Last 10 Transactions </h3>
+        </div>
+        <br>
+
+        <section class="section section-expenses">
+            <ul class="z-depth-1">
+                <li>
+                    <div class="card-panel z-depth-0 expense">
+                        <div class="row">
+                            
+                            <div class="col l6">
+                                <span class="title bold">Category</span>
+                            </div>
+    
+                            <div class="col l6">
+                                <span class="title bold">Expense Price</span>
+                            </div>
+    
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </section>
+        
+    </div>
+{% endblock %}
+
