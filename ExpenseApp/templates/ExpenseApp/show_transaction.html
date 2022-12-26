@@ -1,5 +1,5 @@
 {% extends 'ExpenseApp/base.html' %}
-
+{% load static %}
 
 {% block content %}
     <br>
@@ -9,25 +9,29 @@
         </div>
         <br>
         <div style="margin-left: 5rem;">
-            <table class="table table-striped">
+            <table id="transaction">
                 <thead>
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">DATE</th>
+                    <th scope="col">Discription</th>
+                    <th scope="col">Transaction Type</th>
                     <th scope="col">Category</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>April 20 2022</td>
-                    <td>Travel Expense</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>April 19 2022</td>
-                    <td>Food Expense</td>
-                  </tr>
+                  
+                  {% for item in TransData %}
+
+                    <tr>
+                      <td scope="row">{{ forloop.counter }}</td>
+                      <td>{{ item.transDate }}</td>
+                      <td>{{ item.transDisc }}</td>
+                      <td>{{ item.transType }}</td>
+                      <td>{{ item.catData }}</td>
+                    </tr>
+                  {% endfor %}
+                  
                 </tbody>
               </table>
         </div>

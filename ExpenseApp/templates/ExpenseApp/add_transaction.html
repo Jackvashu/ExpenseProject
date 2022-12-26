@@ -7,9 +7,11 @@
       <div>
         <h3>Add Transaction</h3>
       </div>
-      <br />
+      <br /> 
+      
+        {% include 'ExpenseApp/message.html' %}
   
-      <form action="">
+      <form action="" method="post">
         {% csrf_token %}
         <div class="grp cat">
           <label for="catgory">Category</label>
@@ -20,13 +22,22 @@
             placeholder="Category ...."
           />
         </div>
+        <div class="grp cat">
+          <label for="quantity">Amount</label>
+          <input
+            type="text"
+            id="catgory"
+            name="quantity"
+            placeholder="Amount ...."
+          />
+        </div>
         <div id="dateAndTime">
           <div class="grp">
-            <label for="transType">Date and time</label>
+            <label for="dateTime">Date and time</label>
           <input
             type="date"
             id="date"
-            name="transType"
+            name="dateTime"
             placeholder="date and time"
           />
           </div>
@@ -51,7 +62,7 @@
           ></textarea>
        </div>
   
-        <input style="" type="submit" value="Submit" />
+        <input type="submit" value="Submit" />
       </form>
     </div>
 

@@ -11,7 +11,7 @@ class Addmoney(models.Model):
     transDisc = models.CharField(max_length=50)
     
     def __str__(self):
-        return self.user
+        return self.transType
 
 
 #  for profile 
