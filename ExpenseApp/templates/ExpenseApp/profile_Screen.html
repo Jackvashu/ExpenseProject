@@ -15,52 +15,14 @@
   
         <form action="" method="post">
             {% csrf_token %}
-            {% if ProData %}
-                {% for item in ProData %}
+            
                 <div class="grp cat">
                     <label for="nameData">Name</label>
                     <input
                         type="text"
                         id="nameData"
                         name="nameData"
-                        disabled
-                        value="{{ item.user }}"
-                        placeholder="Enter The Name ... "
-                    />
-                </div>
-
-                <div class="grp cat">
-                    <label for="catgory">Current Balance</label>
-                    <input
-                        type="text"
-                        id="balanceData"
-                        disabled
-                        name="balanceData"
-                        value="{{ item.current_balance }}"
-                        placeholder="Enter the balance ... "
-                    />
-                </div>
-                <div class="grp cat">
-                    <label for="budgetData">Current Budget</label>
-                    <input
-                        type="text"
-                        id="budgetData"
-                        disabled
-                        name="budgetData"
-                        value="{{ item.budget }}"
-                        placeholder="Enter the balance ... "
-                    />
-                </div>
-                {% endfor %}
-            {% else %}
-                {% for item in ProData %}
-                <div class="grp cat">
-                    <label for="nameData">Name</label>
-                    <input
-                        type="text"
-                        id="nameData"
-                        name="nameData"
-                        value="{{ item.user }}"
+                        value="{{ name }}"
                         placeholder="Enter The Name ... "
                     />
                 </div>
@@ -71,7 +33,7 @@
                         type="text"
                         id="balanceData"
                         name="balanceData"
-                        value="{{ item.current_balance }}"
+                        value="{{ current_bal }}"
                         placeholder="Enter the balance ... "
                     />
                 </div>
@@ -81,12 +43,10 @@
                         type="text"
                         id="budgetData"
                         name="budgetData"
-                        value="{{ item.budget }}"
+                        value="{{ current_bud }}"
                         placeholder="Enter the balance ... "
                     />
                 </div>
-                {% endfor %}
-            {% endif%}
           
                 {% if ProData %} 
                     <input type="submit" style="display: none;"  value="Submit" />

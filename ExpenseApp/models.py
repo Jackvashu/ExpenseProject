@@ -22,3 +22,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user
+
+class TotalBudget(models.Model):
+    total_bud = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.total_bud

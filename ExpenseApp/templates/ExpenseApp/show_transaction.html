@@ -3,38 +3,54 @@
 
 {% block content %}
     <br>
-    <div style="width: 50%; margin-left: 10%;">
-        <div>
-            <h3>Show Transaction</h3>
-        </div>
-        <br>
-        <div style="margin-left: 5rem;">
-            <table id="transaction">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">DATE</th>
-                    <th scope="col">Discription</th>
-                    <th scope="col">Transaction Type</th>
-                    <th scope="col">Category</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  
-                  {% for item in TransData %}
+    <div id="listContainer">
+        
+      <!-- Heading -->
+      <div>
+          <h3>Show Transaction</h3>
+      </div>
+      <br>
+      <!-- Transaction List -->
+      <div>
+          <table id="transaction">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">DATE</th>
+                  <th scope="col">Discription</th>
+                  <th scope="col">Transaction Type</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+                {% for item in TransData %}
 
-                    <tr>
-                      <td scope="row">{{ forloop.counter }}</td>
-                      <td>{{ item.transDate }}</td>
-                      <td>{{ item.transDisc }}</td>
-                      <td>{{ item.transType }}</td>
-                      <td>{{ item.catData }}</td>
-                    </tr>
-                  {% endfor %}
-                  
-                </tbody>
-              </table>
-        </div>
+                  <tr>
+                    <td scope="row">{{ forloop.counter }}</td>
+                    <td>{{ item.transDate }}</td>
+                    <td>{{ item.transDisc }}</td>
+                    <td>{{ item.transType }}</td>
+                    <td>{{ item.catData }}</td>
+                    <td>{{ item.quantity }}</td>
+                  </tr>
+                {% endfor %}
+                
+              </tbody>
+            </table>
+      </div>
+    </div>
+    <br>
+    <br>
+    <!-- Pagination  -->
+    <div id="pagi">
+      <a href="?page=1">&laquo;</a>
+      {% for p in pageCount %}
+        <a href="?page={{ forloop.counter }}">{{ forloop.counter }}</a>
+      {% endfor %}
+      
+      <a href="?page={{ lastPage }}"">&raquo;</a>
     </div>
     
 {% endblock %}

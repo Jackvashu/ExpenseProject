@@ -1,13 +1,18 @@
 from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
-from .models import Profile, Addmoney
+from .models import Profile, Addmoney, TotalBudget
 from django.contrib import messages
+from datetime import date
+import math
 # Create your views here.
 
 #  for Home Screen 
 def home(request):
     color = False
     
+    total_bud_data = TotalBudget.objects.all()
+    
+
     transData = Addmoney.objects.all() 
     latestData = transData.order_by("-transDate")[:10]
     profile = Profile.objects.all()
@@ -18,10 +23,10 @@ def home(request):
     else:
         budgetData = profile.values('budget')[0]['budget']
         balanceData =  profile.values('current_balance')[0]['current_balance']
-        totalBudgetData = profile.values('left_Budget')[0]['left_Budget']
+        totalBudgetData = total_bud_data.values('total_bud')[0]['total_bud']
     # print(f"{type(balanceData)} --  {balanceData}")
-    # print(f"{type(budgetData)} --  {budgetData}")
-    if len(budgetData) == 0:
+        # print(f"{type(totalBudgetData)} --  {totalBudgetData}")
+    if budgetData == 0:
         color = False
     elif int(budgetData) < 0:
         color = True
@@ -40,28 +45,45 @@ def home(request):
 # for add profile details
 def addProfile(request):
     context = {}
-    dataFlag = True
+    check = False
+    name =''
+    current_bal = ''
+    current_bud = ''
     if request.method == 'POST':
-        
+        total_bud = ''
         name = request.POST['nameData']
         current_bal = request.POST['balanceData']
         current_bud = request.POST['budgetData']
         total_bud = request.POST['budgetData']
         # print(name)
-        # print(current_bal)
+        form_bud = TotalBudget(total_bud=total_bud)
+        form_bud.save()
+
+        print(f"{type(total_bud)}--{total_bud}")
+        print(type(current_bal))
         # print(current_bud)
-        form_Profile = Profile(user=name, current_balance=current_bal, budget=current_bud, left_Budget=total_bud)
+        form_Profile = Profile(user=name, current_balance=current_bal, budget=current_bud)
         form_Profile.save()
     
-    profile_Data = Profile.objects.all()
-    data = Profile.objects.values()
-    if len(data) == 0:
-        dataFlag = False
+    ProData = Profile.objects.all()
+
+    # data = Profile.objects.values()
+
+    if len(ProData) == 0:
+        name =''
+        current_bal = ''
+        current_bud = ''
     else:
-        dataFlag = True
+
+        name = ProData.values('user')[0]['user']
+        current_bal = ProData.values('current_balance')[0]['current_balance']
+        current_bud = ProData.values('budget')[0]['budget']
+
     context = {
-        'ProData' : data,
-        'dataFlag' : dataFlag
+        'ProData' : ProData,
+        'name'     : name,
+        'current_bal' :current_bal,
+        'current_bud' :current_bud
     
     }
     return render(request, 'ExpenseApp/profile_Screen.html',context=context)
@@ -72,10 +94,49 @@ def showTransactionList(request):
 
     # using "-" this we can get latest records from the DataBase
     transData = Addmoney.objects.order_by("-transDate") 
+    dataList = []
+    # Pagination logic
+    pagiPerPageCount = 4
+    curPage = 1
+    lastPage = ''
+    pageNum = []
+    currentPage = request.GET.get('page')
 
-    print(transData)
+    #  converting request  data in int 
+    #  checking page number should not be nun and 
+    #  it be numeric number or not 
+
+    if currentPage is not None and currentPage.isnumeric():
+        curPage = int(currentPage)
+    
+    
+    lenData = len(transData)
+    pageCount = math.ceil(lenData/pagiPerPageCount)
+    startPoint = (curPage -1)*pagiPerPageCount
+    endpoint = startPoint+pagiPerPageCount
+    dataList = transData[startPoint:endpoint]
+
+    #  for printing page number converting integer into list
+    for pa in range(1,pageCount+1):
+        pageNum.append(pa)
+
+    #  for last page
+    if len(pageNum) == 0:
+        lastPage = '0'
+    else:
+        lastPage = pageNum[-1]
+    # print(f"last page number list -- {lastPage} ")
+    # print(f"{type(curPage)}---{curPage}")
+    # print(f"{type(pageCount)}--{pageCount}")
+    # print(f"{type(startPoint)}--{startPoint}")
+    # print(f"{type(endpoint)}---{endpoint}")
+    dataAnalysis(request)
+
+    # print(transData)
     context = {
-        "TransData" : transData,
+        "TransData" : dataList,
+        "pageCount" : pageNum,
+        "lastPage"  : lastPage
         }
     return render(request, 'ExpenseApp/show_transaction.html', context)
 
@@ -104,21 +165,28 @@ def addTransaction(request):
     if request.method == 'POST':
         category = request.POST['catData']
         dateTime = request.POST['dateTime']
+        if len(dateTime) == 0:
+            dateTime = date.today()
         transType = request.POST['transType']
         transDisc = request.POST['transDisc']
+        if len(transDisc) == 0:
+            transDisc = "Others"
         quantity = request.POST["quantity"]
         if transType == exp:
-            balance = int(balData) - int(quantity)
-            budg = int(budData) - int(quantity) 
+            balance = float(balData) - float(quantity)
+            budg = float(budData) - float(quantity) 
         else :
-            balance = int(balData) + int(quantity)
+            balance = float(balData) + float(quantity)
             budg = budData
         
-        objects = Profile.objects.filter(user='testing_1')
-        for obj in objects:
-            obj.current_balance = balance
-            obj.budget = budg
-            obj.save()
+        if proData.filter(user=userData).exists():
+            objects = Profile.objects.filter(user=userData)
+            for obj in objects:
+                obj.current_balance = balance
+                obj.budget = budg
+                obj.save()
+
+        
         # pro_form.save()
         trans_form = Addmoney(
             transType = transType,
@@ -141,3 +209,15 @@ def addTransaction(request):
     return render(request, 'ExpenseApp/add_transaction.html',context=context)
 
 
+def dataAnalysis(request):
+    # catData = ''
+    catPrice = []
+    catItem = 'Food'
+    catList = ['Food','Travel','Shopping','Groceries','Entertainment','Necessities','Other']
+    transData = Addmoney.objects.filter(transType="Expense")
+    print(transData)
+    print(catItem in catList)
+    if catItem in catList:
+        catData = transData.filter(catData=catItem).values('quantity')
+        for price in catData:
+            print(f"{type(price)}---{price}")

@@ -10,25 +10,25 @@
         </div>
         <br>
         <section class="section section-stats">
-            <div class="row">
-                <div class="col s12 m12 l4">
+            <div id="cardRow">
+                <div class="col">
                     <div class="card-panel">
                         <h6 class="bold">Total Balance</h6>
-                        <h1 class="bold">$3000</h1>
+                        <h1 class="bold">${{ balanceData }}</h1>
                     </div>
                 </div>
 
-                <div class="col s12 m12 l4">
+                <div class="col">
                     <div class="card-panel">
                         <h6 class="bold">Total Budget</h6>
-                        <h1 class="bold">{{ budgetData }}</h1>
+                        <h1 class="bold">${{ budgetData }}</h1>
                     </div>
                 </div>
 
-                <div class="col s12 m12 l4">
+                <div class="col">
                     <div class="card-panel">
                         <h6 class="bold">Budget Left</h6>
-                        <h1 class="bold">$1148</h1>
+                        <h1 class="bold">${{ left_Budget }}</h1>
                     </div>
                 </div>
             </div>
@@ -42,8 +42,8 @@
         <section class="section section-expenses">
             <ul class="z-depth-1">
                 <li>
-                    <div class="card-panel z-depth-0 expense">
-                        <div class="row">
+                    <div class="card-panel expense">
+                        <div id="cardRow">
                             
                             <div class="col l6">
                                 <span class="title bold">Category</span>

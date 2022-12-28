@@ -1,3 +1,12 @@
+#listContainer{
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  margin-left: 40px;
+}
+
+
+
 #transaction {
     border-collapse: collapse;
     width: 150%;
@@ -13,7 +22,7 @@
   #transaction tbody tr{
     background-color: #FFF;
   }
-  #transaction tr:hover {background-color: #ddd;}
+  /* #transaction tr:hover {background-color: #ddd;} */
   
   #transaction th {
     padding-top: 12px;
@@ -21,3 +30,24 @@
     text-align: left;
     background-color: #a39d9d;
   }
+
+#pagi{
+  display: flex;
+  justify-content: center;
+}
+#pagi a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+}
+
+#pagi a.active {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+#pagi a:hover:not(.active) {background-color: #ddd;}

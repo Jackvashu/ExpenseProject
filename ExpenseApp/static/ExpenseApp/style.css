@@ -2,7 +2,7 @@
 
 body{
     font-family: 'Montserrat' !important;
-    background-color: #E0E0E0 !important;
+    
 }
 
 .bold{
@@ -14,10 +14,17 @@ body{
     height: 100%;
 }
 
-
+#cardRow{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 30px;
+    margin-right: 30px;
+}
 .section-stats .card-panel{
     margin: 8px;
     padding: 8px;
+    padding-left: 5vw;
+    padding-right: 5vw;
     background-color: #fff;
 }
 .section-stats h1{
@@ -30,6 +37,8 @@ body{
         font-size: calc(16px + 4vw);
     }
 }
+
+
 ul {
     list-style-type: none;
     padding-inline-start:0;
@@ -40,7 +49,7 @@ ul {
     margin: 0 ;
     padding: 7px;
     background-color: #fff;
-    padding-inline-start:10rem;
+    
 }
 
 .danger{
@@ -52,6 +61,22 @@ ul {
     margin-right: 2rem;
     text-align: center;
 }
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .closebtn:hover {
+    color: black;
+  }
+
 
 .addContainer{
     display: flex;
