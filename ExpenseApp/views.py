@@ -1,25 +1,38 @@
 from django.shortcuts import render
 from django.http import HttpResponse , JsonResponse
-from .models import Profile, Addmoney, TotalBudget
+from .models import Profile, Addmoney, TotalBudget,Expenses
 from django.contrib import messages
 from datetime import date
 import math
+import re
+import operator
 # Create your views here.
 
 #  for Home Screen 
 def home(request):
     color = False
-    
+    lstPrice = '0'
+    addSum = 0
+    price = {}
     total_bud_data = TotalBudget.objects.all()
     
-
+    # lstPrice = ExpenseData.values('priceList')
+    # print(lstPrice)
+    # if len(lstPrice) == 0:
+    #     lstPrice = 0
+    # for val in lstPrice:
+        
+    ExpenseData = Expenses.objects.order_by("-priceList")
+    # expDataList = sorted(ExpenseData, key=operator.attrgetter('priceList'))
+    # print(expDataList) 
+    # print(f"{type(price)} --- {price}")
     transData = Addmoney.objects.all() 
     latestData = transData.order_by("-transDate")[:10]
     profile = Profile.objects.all()
     if len(profile) == 0:
-        budgetData = 0
-        balanceData = 0
-        totalBudgetData = 0
+        budgetData = 0.0
+        balanceData = 0.0
+        totalBudgetData = 0.0
     else:
         budgetData = profile.values('budget')[0]['budget']
         balanceData =  profile.values('current_balance')[0]['current_balance']
@@ -28,17 +41,19 @@ def home(request):
         # print(f"{type(totalBudgetData)} --  {totalBudgetData}")
     if budgetData == 0:
         color = False
-    elif int(budgetData) < 0:
+    elif float(budgetData) < 0:
         color = True
     else:
         color = False
+
     
     trans_context = {
         "budgetData" : budgetData,
         "balanceData" : balanceData,
         "TransData" : latestData,
         'left_Budget' : totalBudgetData,
-        "color" : color
+        "color" : color,
+        "ExpenseData" : ExpenseData
     }
     return render(request, 'ExpenseApp/Home.html', trans_context)
 
@@ -130,7 +145,7 @@ def showTransactionList(request):
     # print(f"{type(pageCount)}--{pageCount}")
     # print(f"{type(startPoint)}--{startPoint}")
     # print(f"{type(endpoint)}---{endpoint}")
-    dataAnalysis(request)
+    
 
     # print(transData)
     context = {
@@ -186,21 +201,24 @@ def addTransaction(request):
                 obj.budget = budg
                 obj.save()
 
-        
+                
         # pro_form.save()
         trans_form = Addmoney(
             transType = transType,
-            quantity = quantity,
+            quantity = float(quantity),
             transDate = dateTime,
             catData = category,
             transDisc = transDisc
         )
         
         trans_form.save()
+
+        print(category)
+        dataAnalysis(request,category)
         messages.success(request, "Added Transaction List !!!")
     
     data = Addmoney.objects.values()
-    quanData = data.filter
+    # quanData = data.filter
 
     # print(Addmoney.objects.all().values_list())
     context={
@@ -209,15 +227,39 @@ def addTransaction(request):
     return render(request, 'ExpenseApp/add_transaction.html',context=context)
 
 
-def dataAnalysis(request):
+def dataAnalysis(request,catItem):
     # catData = ''
-    catPrice = []
-    catItem = 'Food'
+    catDict = {}
+    catPrice = 0
+    val = []
+    sumAdd = 0
+    catItem = catItem
     catList = ['Food','Travel','Shopping','Groceries','Entertainment','Necessities','Other']
     transData = Addmoney.objects.filter(transType="Expense")
+    expenseData = Expenses.objects.all()
     print(transData)
     print(catItem in catList)
     if catItem in catList:
         catData = transData.filter(catData=catItem).values('quantity')
+        
         for price in catData:
-            print(f"{type(price)}---{price}")
+            val = price.values()
+            for newVal in val:
+                sumAdd += newVal
+                        
+        catPrice = sumAdd
+        print(catPrice)
+    if expenseData.filter(categoryList=catItem).exists():
+        print("if m aa gaaye")
+        object = expenseData.filter(categoryList=catItem)
+        for obj in object:
+            print(f"{type(catPrice)} --- {catPrice}")
+            obj.priceList = catPrice
+            obj.save()
+    else:
+        print("else m aa gaaye!!")
+        form_Expense = Expenses(
+            categoryList=catItem,
+            priceList = catPrice
+            )
+        form_Expense.save()

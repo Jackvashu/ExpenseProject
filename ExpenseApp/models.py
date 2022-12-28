@@ -28,3 +28,10 @@ class TotalBudget(models.Model):
 
     def __str__(self):
         return self.total_bud
+
+class Expenses(models.Model):
+    categoryList = models.CharField(max_length=50)
+    priceList = models.IntegerField()
+
+    def __str__(self):
+        return self.categoryList

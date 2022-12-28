@@ -1,0 +1,22 @@
+#danger{
+    background-color: #90ee90;
+    padding: 10px;
+    padding-inline-start:1rem;
+    padding-inline-end: 1rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    text-align: center;
+}
+
+#closebtn {
+    color: white;
+    float: right;
+    font-size: 22px;
+    line-height: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+#closebtn:hover {
+    color: black;
+  }

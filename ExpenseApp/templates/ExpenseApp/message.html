@@ -2,11 +2,11 @@
 
 {% if messages %}
   {% for message in messages %}
-    <div class="danger">
+    <div id="danger">
       <strong>{{message}}</strong>
-      <button type="button" class="closebtn" onclick="this.parentElement.style.display='none';" data-dismiss="alert">
+      <span type="button" id="closebtn" onclick="this.parentElement.style.display='none';" >
       x
-      </button>
+      </span>
       
     </div>
  {% endfor %}

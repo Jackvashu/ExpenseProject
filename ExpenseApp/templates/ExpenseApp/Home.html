@@ -5,9 +5,12 @@
 {% block content %}
     <div class="container">
         <br>
-        <div class="danger">
-            <span>You are going over buget limit!!</span>
-        </div>
+        {% if color %}
+            <div class="danger">
+                <span>You are going over buget limit!!</span>
+            </div>
+        {% endif %}
+        
         <br>
         <section class="section section-stats">
             <div id="cardRow">
@@ -21,43 +24,48 @@
                 <div class="col">
                     <div class="card-panel">
                         <h6 class="bold">Total Budget</h6>
-                        <h1 class="bold">${{ budgetData }}</h1>
+                        <h1 class="bold">${{ left_Budget }}</h1>
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="card-panel">
                         <h6 class="bold">Budget Left</h6>
-                        <h1 class="bold">${{ left_Budget }}</h1>
+                        {% if color %}
+                            <h1 class="bold" style="color: #B22222;">${{ budgetData }}</h1>
+                        {% else %}
+                            <h1 class="bold" style="color: #228B22;">${{ budgetData }}</h1>
+                        {% endif %}
+                        
                     </div>
                 </div>
             </div>
         </section>
         <br>
-        <div>
-            <h3>Last 10 Transactions </h3>
+        <div id="topHeading">
+            <h3>Top Most Expense </h3>
         </div>
         <br>
 
-        <section class="section section-expenses">
-            <ul class="z-depth-1">
-                <li>
-                    <div class="card-panel expense">
-                        <div id="cardRow">
-                            
-                            <div class="col l6">
-                                <span class="title bold">Category</span>
-                            </div>
-    
-                            <div class="col l6">
-                                <span class="title bold">Expense Price</span>
-                            </div>
-    
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </section>
+        <table id="topExpenseList">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in ExpenseData %}
+                    <tr>
+                        <td>{{ item.categoryList }}</td>
+                        <td>{{ item.priceList }}</td>
+                    </tr>
+                {% endfor %}
+                
+            </tbody>
+            
+
+        </table>
         
     </div>
 {% endblock %}
